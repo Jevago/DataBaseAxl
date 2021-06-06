@@ -230,6 +230,41 @@ void Database::OrdenarNumericamente(unsigned char type)
     }
 }
 
+void Database::OrdenarAlfabeticamente(){
+    int i=0;
+    int idi, idj, idaux;
+    string albumi,albumi2;
+    Album *aux=NULL;
+    Album *aux2=NULL;
+    Album ax3;
+    
+    for (i=0; i<this->size; i++) {
+        
+        idi = data[i].GetIdKey();
+        idj=data[i+1].GetIdKey();
+        
+        aux = data[i].GetCD();
+        albumi= aux->nombre;
+        
+        aux2 = data[i+1].GetCD();
+        albumi2= aux2->nombre;
+        if (albumi.compare(albumi2)>0) {
+            
+            idaux=idi;
+            idi=idj;
+            idj=idaux;
+            
+            ax3.nombre=aux->nombre;
+            ax3.info.artista=aux->info.artista;
+            ax3.info.calificacion=aux->info.calificacion;
+            ax3.info.numTracks=aux->info.numTracks;
+            
+            data[i].SetCD(data[i+1].GetCD());
+            data[i+1].SetCD(&ax3);
+            
+        }
+    }
+}
 
 int main(int argc, const char * argv[]) {
     int size = 0;
