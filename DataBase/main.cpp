@@ -13,6 +13,8 @@
 #define ASCENDENTE 0u
 #define DESENDENTE 1u
 
+using namespace std;
+
 typedef struct Informacion
 {
     std::string artista;
@@ -232,36 +234,43 @@ void Database::OrdenarNumericamente(unsigned char type)
 
 void Database::OrdenarAlfabeticamente(){
     int i=0;
+    int j =0;
     int idi, idj, idaux;
     string albumi,albumi2;
     Album *aux=NULL;
     Album *aux2=NULL;
     Album ax3;
     
-    for (i=0; i<this->size; i++) {
-        
-        idi = data[i].GetIdKey();
-        idj=data[i+1].GetIdKey();
-        
-        aux = data[i].GetCD();
-        albumi= aux->nombre;
-        
-        aux2 = data[i+1].GetCD();
-        albumi2= aux2->nombre;
-        if (albumi.compare(albumi2)>0) {
+    for (i = 0; i < this->size - 1; i++)
+    {
+        for(j = i + 1; j < this->size; j++)
+        {
+            idi = data[i].GetIdKey();
+            idj=data[j].GetIdKey();
             
-            idaux=idi;
-            idi=idj;
-            idj=idaux;
+            aux = data[i].GetCD();
+            albumi= aux->nombre;
             
-            ax3.nombre=aux->nombre;
-            ax3.info.artista=aux->info.artista;
-            ax3.info.calificacion=aux->info.calificacion;
-            ax3.info.numTracks=aux->info.numTracks;
-            
-            data[i].SetCD(data[i+1].GetCD());
-            data[i+1].SetCD(&ax3);
-            
+            aux2 = data[j].GetCD();
+            albumi2= aux2->nombre;
+            if (albumi.compare(albumi2)>0)
+            {
+                idaux=idi;
+                idi=idj;
+                idj=idaux;
+                
+                data[i].SetIdKey(idi);
+                data[j].SetIdKey(idj);
+                
+                ax3.nombre=aux->nombre;
+                ax3.info.artista=aux->info.artista;
+                ax3.info.calificacion=aux->info.calificacion;
+                ax3.info.numTracks=aux->info.numTracks;
+                
+                data[i].SetCD(data[j].GetCD());
+                data[j].SetCD(&ax3);
+                
+            }
         }
     }
 }
@@ -285,7 +294,8 @@ int main(int argc, const char * argv[]) {
     std::cout << "---------------------------------------------------------------------" << std::endl;
     std::cout << "---------------------------- Ordenamiento ---------------------------" << std::endl;
     //db.OrdenarNumericamente(DESENDENTE);
-    db.OrdenarNumDesendente();
+    db.OrdenarAlfabeticamente();
+    
     std::cout << "---------------------------------------------------------------------" << std::endl;
     db.Mostrar();
     
