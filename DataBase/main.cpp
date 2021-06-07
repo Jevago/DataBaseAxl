@@ -281,16 +281,10 @@ void Database::GenerarAchivo(){
     Album *aux=NULL;
     Album aux2;
     
-<<<<<<< HEAD
     int numtracks;
-=======
-    int Id=0,numtracks;
->>>>>>> 0a633d1df0f7c48dc81d886127d66ea5c7d14ecf
     string nombre,artista;
     float calificacion;
     
-    
-<<<<<<< HEAD
     FILE *archivo = NULL;
     archivo=fopen("./BasedeDatos.txt", "wt");
     
@@ -318,28 +312,6 @@ void Database::GenerarAchivo(){
     
     cout << "Proceso terminado" << endl;
 }
-=======
-    FILE *archivo;
-    archivo=fopen("BasedeDatos.txt", "wt");
-    
-    
-    for (i=0; i<this->size; i++) {
-        
-        idi=data[i].GetIdKey();
-        aux=data[i].GetCD();
-        
-        nombre=aux->nombre;
-        artista=aux->info.artista;
-        numtracks=aux->info.numTracks;
-        calificacion=aux->info.calificacion;
-        
-        fprintf(archivo, "%d %s %s %d %f",idi,nombre.c_str(),artista.c_str(),numtracks,calificacion);
-    }
-    fclose(archivo);
-    cout<<"Proceso terminado";
-    }
-
->>>>>>> 0a633d1df0f7c48dc81d886127d66ea5c7d14ecf
 
 int main(int argc, const char * argv[]) {
     int size = 0;
@@ -360,11 +332,7 @@ int main(int argc, const char * argv[]) {
     std::cout << "---------------------------------------------------------------------" << std::endl;
     std::cout << "---------------------------- Ordenamiento ---------------------------" << std::endl;
     //db.OrdenarNumericamente(DESENDENTE);
-<<<<<<< HEAD
     //db.OrdenarAlfabeticamente();
-=======
-    db.OrdenarAlfabeticamente();
->>>>>>> 0a633d1df0f7c48dc81d886127d66ea5c7d14ecf
     db.GenerarAchivo();
     std::cout << "---------------------------------------------------------------------" << std::endl;
     //db.Mostrar();
