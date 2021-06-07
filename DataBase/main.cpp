@@ -116,6 +116,7 @@ public:
     void OrdenarNumDesendente(void);
     void OrdenarNumAsendente(void);
     void OrdenarAlfabeticamente(void);
+    void GenerarAchivo(void);
     
 };
 
@@ -275,6 +276,44 @@ void Database::OrdenarAlfabeticamente(){
     }
 }
 
+void Database::GenerarAchivo(){
+    int idi,i=0;
+    Album *aux=NULL;
+    Album aux2;
+    
+    int numtracks;
+    string nombre,artista;
+    float calificacion;
+    
+    
+    FILE *archivo = NULL;
+    archivo=fopen("./BasedeDatos.txt", "wt");
+    
+    if(NULL != archivo)
+    {
+        for (i=0; i<this->size; i++)
+        {
+            idi=data[i].GetIdKey();
+            aux=data[i].GetCD();
+            
+            nombre=aux->nombre;
+            artista=aux->info.artista;
+            numtracks=aux->info.numTracks;
+            calificacion=aux->info.calificacion;
+            
+            fprintf(archivo, "%d %s %s %d %f",idi,nombre.c_str(),artista.c_str(),numtracks,calificacion);
+        }
+            
+        fclose(archivo);
+    }
+    else
+    {
+        cout << "Error al generar el archivo!!\n" << endl;
+    }
+    
+    cout << "Proceso terminado" << endl;
+}
+
 int main(int argc, const char * argv[]) {
     int size = 0;
     Database db;
@@ -294,10 +333,10 @@ int main(int argc, const char * argv[]) {
     std::cout << "---------------------------------------------------------------------" << std::endl;
     std::cout << "---------------------------- Ordenamiento ---------------------------" << std::endl;
     //db.OrdenarNumericamente(DESENDENTE);
-    db.OrdenarAlfabeticamente();
-    
+    //db.OrdenarAlfabeticamente();
+    db.GenerarAchivo();
     std::cout << "---------------------------------------------------------------------" << std::endl;
-    db.Mostrar();
+    //db.Mostrar();
     
     std::cout << "Hello, World!\n";
     return 0;
